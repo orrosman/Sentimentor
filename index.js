@@ -10,14 +10,43 @@ async function getSentiment(text){
     const response = await fetch(`https://sentim-api.herokuapp.com/api/v1/`,data)
     const answer = await response.json()
 
-    console.log(answer.result)
+    // console.log(answer.result)
+    return answer.result
 }
 
 //Get input from textarea
-function getInput(){
+async function getInput(){
     const text = document.getElementById("text-input").value
-    getSentiment(text)
+    return await getSentiment(text)
+}
+
+//Creates an element
+function createElement(tagName, children = []){
+    const element = document.createElement(tagName)
+
+    for (const child of children) {
+        element.append(child)
+    }
+    return element
+}
+
+//Creates and update a result element and append it to the DOM
+async function createResultElement(){
+    const { polarity, type } = await getInput()
+    const resultDiv = document.getElementById("result")
+
+    const polarityElement = createElement("div", ["Polarity: ", polarity])
+    const typeElement = createElement("div", ["Type: ", type])
+    const result = createElement("div",[ polarityElement, typeElement ])
+
+    if(!resultDiv.firstChild){
+        resultDiv.append(result)
+    }
+    else{
+        resultDiv.removeChild(resultDiv.firstChild)
+        resultDiv.append(result)
+    }
 }
 
 //Adds event listener to the button
-document.getElementById("analyze-button").addEventListener("click", getInput)
+document.getElementById("analyze-button").addEventListener("click", createResultElement)
