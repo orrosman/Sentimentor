@@ -5,13 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentimentor</title>
+    <script src="./index.js" defer></script>
 </head>
 <h1>The Sentimentor</h1>
 <p><em>This site is a better interface for the <a href="https://sentim-api.herokuapp.com/">SENTIM-API</a> website</em></p>
 <body>
     <p>Enter your text to analyze below:</p>
     <textarea id="text-input" name="text-input" placeholder="Your text here!" rows="12" cols="50"></textarea>
-    <br><input type="button" value="Analyze" >
+    <br><input id="analyze-button" type="button" value="Analyze" >
 
     <div id="result">
 
