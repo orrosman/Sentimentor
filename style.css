@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
+body{
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+}
+
+div{
+    font-family: 'Roboto', sans-serif;
+}
+
+.positive{
+    color: rgb(12, 187, 50);
+}
+
+.negative{
+    color: rgb(204, 61, 61);
+}
+
+.neutral{
+    color: rgb(129, 128, 128);
+}

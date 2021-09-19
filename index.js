@@ -39,6 +39,17 @@ async function createResultElement(){
     const typeElement = createElement("div", ["Type: ", type])
     const result = createElement("div",[ polarityElement, typeElement ])
 
+    switch (type) {
+        case "positive":
+            result.classList.add("positive")
+            break;
+        case "negative":
+            result.classList.add("negative")
+            break;
+        case "neutral":
+            result.classList.add("neutral")
+            break;
+    }
     if(!resultDiv.firstChild){
         resultDiv.append(result)
     }
