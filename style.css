@@ -8,6 +8,11 @@ div{
     font-family: 'Roboto', sans-serif;
 }
 
+#cat-photo{
+    max-width: 70%;
+    height: auto;
+    }
+
 .positive{
     color: rgb(12, 187, 50);
 }

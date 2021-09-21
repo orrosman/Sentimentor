@@ -7,10 +7,9 @@ async function getSentiment(text){
             "Content-Type": "application/json" },
             body: JSON.stringify({ "text": text })
     }
-    const response = await fetch(`https://sentim-api.herokuapp.com/api/v1/`,data)
-    const answer = await response.json()
-
-    // console.log(answer.result)
+        const response = await fetch(`https://sentim-api.herokuapp.com/api/v1/`,data)
+        catStatus(response.status)
+        const answer = await response.json()
     return answer.result
 }
 
@@ -59,5 +58,22 @@ async function createResultElement(){
     }
 }
 
+//Get cats HTTP status image and display it
+function catStatus(status){
+    const photo = document.createElement("img")
+    photo.id = "cat-photo"
+    photo.src = `https://http.cat/${status}`
+
+    if(document.getElementById("cat-photo")){
+        document.getElementById("cat-photo").remove()
+    }
+
+    document.getElementById("result").insertAdjacentElement('afterend' ,photo)
+}
+
+function handleClick(){
+    createResultElement()
+}
+
 //Adds event listener to the button
-document.getElementById("analyze-button").addEventListener("click", createResultElement)
+document.getElementById("analyze-button").addEventListener("click", handleClick)
