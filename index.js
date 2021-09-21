@@ -7,14 +7,16 @@ async function getSentiment(text){
             "Content-Type": "application/json" },
             body: JSON.stringify({ "text": text })
     }
-    const response = await fetch(`https://sentim-api.herokuapp.com/api/v1/`,data)
-    catStatus(response.status)
+    const response = await fetch(`https://sentim-api.herokuapp.com/api/v1/`,data) //get data from API
+    catStatus(response.status) //Get cat HTTP image for response status
+
+    //Error handling
     if(!response.ok){
         return response.statusText
     }
     else{
-    const answer = await response.json()
-    return answer.result
+        const answer = await response.json()
+        return answer.result
 }
 }
 
@@ -50,29 +52,31 @@ async function createResultElement(){
             case "positive":
                 result.classList.add("positive")
                 break;
-                case "negative":
-                    result.classList.add("negative")
-                    break;
-                    case "neutral":
-                        result.classList.add("neutral")
-                        break;
-                    }
+            case "negative":
+                result.classList.add("negative")
+                break;
+            case "neutral":
+                result.classList.add("neutral")
+                break;
+            }
         updateElement(resultDiv, result)
     }
+    //error handling
     else{
         const error = createElement("div", [input])
         updateElement(resultDiv, error)      
       }   
 }
 
-function updateElement(element, data){
+function updateElement(element, data=""){
     if (!element.firstChild) {
         element.append(data)
     }
     else {
         element.removeChild(element.firstChild)
         element.append(data)
-    }}
+    }
+}
 
 //Get cats HTTP status image and display it
 function catStatus(status){
@@ -87,8 +91,20 @@ function catStatus(status){
     document.getElementById("result").insertAdjacentElement('afterend' ,photo)
 }
 
+//Create loader indicator element
+function loader(){
+    const resultDiv = document.getElementById("result")
+    const loaderElement = createElement("div")
+    loaderElement.classList.add("loader")
+    resultDiv.appendChild(loaderElement)
+}
+
 function handleClick(){
-    createResultElement()
+    const resultDiv = document.getElementById("result")
+    updateElement(resultDiv, loader())
+    setTimeout(() => {createResultElement()
+        resultDiv.removeChild(document.querySelector(".loader"))
+    }, 1000 )
 }
 
 //Adds event listener to the button
