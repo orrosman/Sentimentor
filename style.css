@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
 body{
     font-family: 'Open Sans', sans-serif;
+    font-size: large;
     text-align: center;
+
 }
 
 div{
     font-family: 'Roboto', sans-serif;
+    padding: 2px;
 }
 
 #cat-photo{
-    max-width: 70%;
+    max-width: 50%;
     height: auto;
     }
 
@@ -29,4 +32,17 @@ div{
     content: url("https://c.tenor.com/I6kN-6X7nhAAAAAj/loading-buffering.gif");
     width: 70px;
     margin: auto;
+}
+textarea{
+    border-style: double;
+    border-width: 1pc;
+    border-radius: 1pc;
+    border-color: rgb(135, 162, 194);
+    font-size: large;
+    outline: none;
+}
+textarea::placeholder {
+    color: rgb(182, 179, 141);
+    font-size: x-large;
+    text-align: center;
 }
