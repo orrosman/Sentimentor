@@ -7,10 +7,15 @@ async function getSentiment(text){
             "Content-Type": "application/json" },
             body: JSON.stringify({ "text": text })
     }
-        const response = await fetch(`https://sentim-api.herokuapp.com/api/v1/`,data)
-        catStatus(response.status)
-        const answer = await response.json()
+    const response = await fetch(`https://sentim-api.herokuapp.com/api/v1/`,data)
+    catStatus(response.status)
+    if(!response.ok){
+        return response.statusText
+    }
+    else{
+    const answer = await response.json()
     return answer.result
+}
 }
 
 //Get input from textarea
@@ -31,32 +36,43 @@ function createElement(tagName, children = []){
 
 //Creates and update a result element and append it to the DOM
 async function createResultElement(){
-    const { polarity, type } = await getInput()
+    const input = await getInput();
     const resultDiv = document.getElementById("result")
 
-    const polarityElement = createElement("div", ["Polarity: ", polarity])
-    const typeElement = createElement("div", ["Type: ", type])
-    const result = createElement("div",[ polarityElement, typeElement ])
-
-    switch (type) {
-        case "positive":
-            result.classList.add("positive")
-            break;
-        case "negative":
-            result.classList.add("negative")
-            break;
-        case "neutral":
-            result.classList.add("neutral")
-            break;
-    }
-    if(!resultDiv.firstChild){
-        resultDiv.append(result)
+    if(typeof input == "object"){
+        const { polarity, type } = input
+        
+        const polarityElement = createElement("div", ["Polarity: ", polarity])
+        const typeElement = createElement("div", ["Type: ", type])
+        const result = createElement("div",[ polarityElement, typeElement ])
+        
+        switch (type) {
+            case "positive":
+                result.classList.add("positive")
+                break;
+                case "negative":
+                    result.classList.add("negative")
+                    break;
+                    case "neutral":
+                        result.classList.add("neutral")
+                        break;
+                    }
+        updateElement(resultDiv, result)
     }
     else{
-        resultDiv.removeChild(resultDiv.firstChild)
-        resultDiv.append(result)
-    }
+        const error = createElement("div", [input])
+        updateElement(resultDiv, error)      
+      }   
 }
+
+function updateElement(element, data){
+    if (!element.firstChild) {
+        element.append(data)
+    }
+    else {
+        element.removeChild(element.firstChild)
+        element.append(data)
+    }}
 
 //Get cats HTTP status image and display it
 function catStatus(status){
